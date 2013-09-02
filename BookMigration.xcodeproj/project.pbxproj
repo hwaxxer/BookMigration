@@ -37,6 +37,7 @@
 		73BFFFE517D3B6730094E0BB /* MHWMigrationFromModel2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BFFFE417D3B6730094E0BB /* MHWMigrationFromModel2Tests.m */; };
 		73BFFFE717D3BB0F0094E0BB /* Model1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73BFFFE617D3BB0F0094E0BB /* Model1.sqlite */; };
 		73C2046B17D1124B0051D6BD /* MHWMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C2046A17D1124B0051D6BD /* MHWMigrationManager.m */; };
+		73D71A2617D536F7000AEA97 /* Model1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73BFFFE617D3BB0F0094E0BB /* Model1.sqlite */; };
 		73DB63C417CE8BF0002CA975 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739100FF17CBF1A600383BD0 /* CoreData.framework */; };
 /* End PBXBuildFile section */
 
@@ -325,6 +326,7 @@
 				739100CE17CBF03500383BD0 /* Default-568h@2x.png in Resources */,
 				739100D417CBF03500383BD0 /* MHWViewController_iPhone.xib in Resources */,
 				739100D717CBF03500383BD0 /* MHWViewController_iPad.xib in Resources */,
+				73D71A2617D536F7000AEA97 /* Model1.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

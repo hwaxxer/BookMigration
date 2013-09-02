@@ -9,5 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface MHWViewController : UIViewController
+<
+UITableViewDataSource,
+UITableViewDelegate
+>
+
+@property (nonatomic, strong) IBOutlet UITableView *tableView;
 
 @end

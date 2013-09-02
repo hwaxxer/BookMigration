@@ -15,6 +15,25 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+
+    // Fake an old store so that we migrate on each launch
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    for (NSBundle *bundle in [NSBundle allBundles]) {
+        NSURL *oldStoreURL = [bundle URLForResource:@"Model1" withExtension:@"sqlite"];
+        NSLog(@"old: %@", oldStoreURL);
+        if (oldStoreURL) {
+            [fileManager removeItemAtURL:[MHWCoreDataController sharedInstance].sourceStoreURL error:nil];
+            [fileManager copyItemAtURL:oldStoreURL
+                                 toURL:[MHWCoreDataController sharedInstance].sourceStoreURL
+                                 error:nil];
+            break;
+        }
+    }
+
+    if ([MHWCoreDataController sharedInstance].isMigrationNeeded) {
+        [[MHWCoreDataController sharedInstance] migrate:nil];
+    }
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -24,18 +43,6 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
-
-//    if ([[MHWCoreDataController sharedInstance] isMigrationNeeded]) {
-//        [self populateLegacyDatabase];
-//        NSError *error = nil;
-//        if (![[MHWCoreDataController sharedInstance] migrate:&error]) {
-//            NSLog(@"error migrating: %@", error);
-//        }
-//    }
-
-    [[MHWCoreDataController sharedInstance] migrate:nil];
-//    [self populateLegacyDatabase];
-
 
     return YES;
 }

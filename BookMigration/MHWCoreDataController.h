@@ -11,11 +11,12 @@
 
 @interface MHWCoreDataController : NSObject
 
-+ (void)setSourceStoreURL:(NSURL *)url;
 + (MHWCoreDataController *)sharedInstance;
 
 - (BOOL)isMigrationNeeded;
 - (BOOL)migrate:(NSError *__autoreleasing *)error;
+
+- (NSURL *)sourceStoreURL;
 
 @property (nonatomic, readonly, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, readonly, strong) NSManagedObjectContext *managedObjectContext;

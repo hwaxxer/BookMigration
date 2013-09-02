@@ -13,7 +13,6 @@
 - (void)setUp
 {
     [super setUp];
-
     [self setUpCoreDataStackMigratingFromStoreWithName:@"Model1.sqlite"];
 }
 

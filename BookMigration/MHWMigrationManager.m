@@ -35,9 +35,8 @@
     }
 
     //Find the source model
-    NSManagedObjectModel *sourceModel = [NSManagedObjectModel
-                                         mergedModelFromBundles:[NSArray arrayWithObject:[NSBundle mainBundle]]
-                                         forStoreMetadata:sourceMetadata];
+    NSManagedObjectModel *sourceModel = [NSManagedObjectModel mergedModelFromBundles:@[[NSBundle mainBundle]]
+                                                                    forStoreMetadata:sourceMetadata];
 
     NSArray *modelPaths = [self modelPaths];
     
@@ -56,44 +55,33 @@
     NSManagedObjectModel *targetModel = nil;
     NSString *modelPath = nil;
     for (modelPath in modelPaths) {
-        targetModel = [[NSManagedObjectModel alloc]
-                       initWithContentsOfURL:[NSURL fileURLWithPath:modelPath]];
-        mappingModel = [NSMappingModel mappingModelFromBundles:[NSArray arrayWithObject:[NSBundle mainBundle]]
+        targetModel = [[NSManagedObjectModel alloc] initWithContentsOfURL:[NSURL fileURLWithPath:modelPath]];
+        mappingModel = [NSMappingModel mappingModelFromBundles:@[[NSBundle mainBundle]]
                                                 forSourceModel:sourceModel
                                               destinationModel:targetModel];
         //If we found a mapping model then proceed
         if (mappingModel) break;
-        //Release the target model and keep looking
-        targetModel = nil;
     }
 
     //We have tested every model, if nil here we failed
     if (!mappingModel) {
-        NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-        [dict setValue:@"No mapping model found in bundle"
-                forKey:NSLocalizedDescriptionKey];
         if (NULL != error) {
             *error = [NSError errorWithDomain:@"Zarra"
                                          code:8001
-                                     userInfo:dict];
+                                     userInfo:@{ NSLocalizedDescriptionKey : @"No mapping model found in bundle" }];
         }
         return NO;
     }
 
     //We have a mapping model and a destination model.  Time to migrate
-    NSMigrationManager *manager = [[NSMigrationManager alloc]
-                                   initWithSourceModel:sourceModel
-                                   destinationModel:targetModel];
+    NSMigrationManager *manager = [[NSMigrationManager alloc] initWithSourceModel:sourceModel
+                                                                 destinationModel:targetModel];
 
-    targetModel = nil;
-
-    NSString *modelName = [[modelPath lastPathComponent]
-                           stringByDeletingPathExtension];
-    NSString *storeExtension = [[sourceStoreURL path] pathExtension];
-    NSString *storePath = [[sourceStoreURL path] stringByDeletingPathExtension];
+    NSString *modelName = [modelPath.lastPathComponent stringByDeletingPathExtension];
+    NSString *storeExtension = [sourceStoreURL.path pathExtension];
+    NSString *storePath = [sourceStoreURL.path stringByDeletingPathExtension];
     //Build a path to write the new store
-    storePath = [NSString stringWithFormat:@"%@.%@.%@", storePath,
-                 modelName, storeExtension];
+    storePath = [NSString stringWithFormat:@"%@.%@.%@", storePath, modelName, storeExtension];
     NSURL *destinationStoreURL = [NSURL fileURLWithPath:storePath];
 
     [manager addObserver:self
@@ -101,20 +89,20 @@
                  options:NSKeyValueObservingOptionNew
                  context:nil];
 
-    if (![manager migrateStoreFromURL:sourceStoreURL
-                                 type:type
-                              options:nil
-                     withMappingModel:mappingModel
-                     toDestinationURL:destinationStoreURL
-                      destinationType:type
-                   destinationOptions:nil
-                                error:error]) {
-        [manager removeObserver:self
-                     forKeyPath:@"migrationProgress"];
-        return NO;
-    }
+    BOOL didMigrate = [manager migrateStoreFromURL:sourceStoreURL
+                                              type:type
+                                           options:nil
+                                  withMappingModel:mappingModel
+                                  toDestinationURL:destinationStoreURL
+                                   destinationType:type
+                                destinationOptions:nil
+                                             error:error];
     [manager removeObserver:self
                  forKeyPath:@"migrationProgress"];
+
+    if (!didMigrate) {
+        return NO;
+    }
 
     //Migration was successful, move the files around to preserve the source
     NSString *guid = [[NSProcessInfo processInfo] globallyUniqueString];
@@ -156,8 +144,7 @@
                                                             inDirectory:nil];
     for (NSString *momdPath in momdArray) {
         NSString *resourceSubpath = [momdPath lastPathComponent];
-        NSArray *array = [[NSBundle mainBundle]
-                          pathsForResourcesOfType:@"mom"
+        NSArray *array = [[NSBundle mainBundle] pathsForResourcesOfType:@"mom"
                           inDirectory:resourceSubpath];
         [modelPaths addObjectsFromArray:array];
     }
@@ -173,7 +160,6 @@
                        context:(void *)context
 {
     if ([keyPath isEqualToString:@"migrationProgress"]) {
-        NSLog(@"progress: %f", [object migrationProgress]);
         if ([self.delegate respondsToSelector:@selector(migrationManager:migrationProgress:)]) {
             [self.delegate migrationManager:self migrationProgress:[(NSMigrationManager *)object migrationProgress]];
         }

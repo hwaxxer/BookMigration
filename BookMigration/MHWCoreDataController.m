@@ -19,13 +19,6 @@
 
 @implementation MHWCoreDataController
 
-static NSURL *sourceStoreURL = nil;
-
-+ (void)setSourceStoreURL:(NSURL *)url
-{
-    sourceStoreURL = url;
-}
-
 + (MHWCoreDataController *)sharedInstance
 {
     static MHWCoreDataController *sharedInstance = nil;
@@ -80,17 +73,18 @@ static NSURL *sourceStoreURL = nil;
 
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
 
-    if (![_persistentStoreCoordinator addPersistentStoreWithType:NSSQLiteStoreType
+    if (![_persistentStoreCoordinator addPersistentStoreWithType:[self sourceStoreType]
                                                    configuration:nil
                                                              URL:[self sourceStoreURL]
                                                          options:nil
                                                            error:&error]) {
 
+        NSLog(@"error: %@", error);
         NSFileManager *fileManager = [NSFileManager new];
         [fileManager removeItemAtPath:[self sourceStoreURL].path error:nil];
 
         [[[UIAlertView alloc] initWithTitle:@"Ouch"
-                                    message:@"A serious error occurred."
+                                    message:error.localizedDescription
                                    delegate:nil
                           cancelButtonTitle:@"OK"
                           otherButtonTitles:nil] show];
