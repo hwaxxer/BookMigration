@@ -9,6 +9,7 @@
 #import "MHWAppDelegate.h"
 
 #import "MHWViewController.h"
+#import "MHWCoreDataController.h"
 
 @implementation MHWAppDelegate
 
@@ -23,8 +24,75 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+
+//    if ([[MHWCoreDataController sharedInstance] isMigrationNeeded]) {
+//        [self populateLegacyDatabase];
+//        NSError *error = nil;
+//        if (![[MHWCoreDataController sharedInstance] migrate:&error]) {
+//            NSLog(@"error migrating: %@", error);
+//        }
+//    }
+
+    [[MHWCoreDataController sharedInstance] migrate:nil];
+//    [self populateLegacyDatabase];
+
+
     return YES;
 }
+
+- (void)populateLegacyDatabase
+{
+    NSManagedObjectContext *moc = [MHWCoreDataController sharedInstance].managedObjectContext;
+
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+    NSArray *result = [moc executeFetchRequest:request error:nil];
+    NSLog(@"results: %@", result);
+
+    for (id mo in result) {
+        [moc deleteObject:mo];
+        NSLog(@"files: %@", [mo valueForKey:@"files"]);
+    }
+
+    NSManagedObject *mo;
+    NSEntityDescription *entityDescription;
+
+    entityDescription = [NSEntityDescription entityForName:@"User" inManagedObjectContext:moc];
+    mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+    [mo setValue:@(1) forKey:@"userId"];
+    NSManagedObject *user = mo;
+
+    entityDescription = [NSEntityDescription entityForName:@"Book" inManagedObjectContext:moc];
+    mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+    [mo setValue:@"Franz Kafka" forKey:@"authorName"];
+    [mo setValue:@"Metamorphosis" forKey:@"title"];
+    [mo setValue:user forKey:@"user"];
+
+    mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+    [mo setValue:@"Franz Kafka" forKey:@"authorName"];
+    [mo setValue:@"The Trial" forKey:@"title"];
+    [mo setValue:user forKey:@"user"];
+
+    mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+    [mo setValue:@"Witold Gombrowicz" forKey:@"authorName"];
+    [mo setValue:@"Cosmos" forKey:@"title"];
+    [mo setValue:user forKey:@"user"];
+
+    mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
+    [mo setValue:@"Thomas Bernhard" forKey:@"authorName"];
+    [mo setValue:@"Extinction" forKey:@"title"];
+    [mo setValue:user forKey:@"user"];
+
+    [moc save:nil];
+
+    request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+    result = [moc executeFetchRequest:request error:nil];
+    NSLog(@"results: %@", result);
+    for (id mo in result) {
+        NSLog(@"mo: %@", mo);
+    }
+
+}
+
 
 - (void)applicationWillResignActive:(UIApplication *)application
 {

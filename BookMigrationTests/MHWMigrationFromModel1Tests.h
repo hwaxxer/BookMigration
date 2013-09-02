@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Martin Hwasser. All rights reserved.
 //
 
-#import <SenTestingKit/SenTestingKit.h>
+#import "MHWCoreDataTests.h"
 
-@interface BookMigrationTests : SenTestCase
+@interface MHWMigrationFromModel1Tests : MHWCoreDataTests
 
 @end
