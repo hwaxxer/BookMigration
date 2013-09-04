@@ -18,13 +18,12 @@
 {
     NSNumber *modelVersion = [mapping.userInfo valueForKey:@"modelVersion"];
     if (modelVersion.integerValue == 2 || modelVersion.integerValue == 3) {
-        NSManagedObject *destinationInstance = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
-                                                                             inManagedObjectContext:[manager destinationContext]];
-
 
         NSMutableArray *sourceKeys = [sourceInstance.entity.attributesByName.allKeys mutableCopy];
         NSDictionary *sourceValues = [sourceInstance dictionaryWithValuesForKeys:sourceKeys];
 
+        NSManagedObject *destinationInstance = [NSEntityDescription insertNewObjectForEntityForName:[mapping destinationEntityName]
+                                                                             inManagedObjectContext:[manager destinationContext]];
         NSArray *destinationKeys = destinationInstance.entity.attributesByName.allKeys;
 
         for (NSString *key in destinationKeys) {
