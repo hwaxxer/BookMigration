@@ -8,6 +8,7 @@
 
 #import "MHWCoreDataTests.h"
 #import "MHWMigrationManager.h"
+#import "MHWCoreDataController.h"
 
 @implementation MHWCoreDataTests
 
@@ -22,10 +23,14 @@
     NSString *storeType = NSSQLiteStoreType;
 
     MHWMigrationManager *migrationManager = [MHWMigrationManager new];
-    [migrationManager progressivelyMigrateURL:storeURL
-                                       ofType:storeType
-                                      toModel:self.managedObjectModel
-                                        error:nil];
+    migrationManager.delegate = [MHWCoreDataController sharedInstance];
+    NSError *error = nil;
+    if (![migrationManager progressivelyMigrateURL:storeURL
+                                            ofType:storeType
+                                           toModel:self.managedObjectModel
+                                             error:&error]) {
+        NSLog(@"error migrating: %@", error);
+    }
 
     self.persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:self.managedObjectModel];
     [self.persistentStoreCoordinator addPersistentStoreWithType:storeType

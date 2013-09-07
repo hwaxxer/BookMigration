@@ -32,13 +32,13 @@
 		73BD5FE817CD36BA003D1AB8 /* MHWBookToBookPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BD5FE717CD36BA003D1AB8 /* MHWBookToBookPolicy.m */; };
 		73BFFFD917D3AAED0094E0BB /* Model1_to_Model2.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 73BFFFD817D3AAED0094E0BB /* Model1_to_Model2.xcmappingmodel */; };
 		73BFFFDC17D3AEB40094E0BB /* Model2_to_Model3.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 73BFFFDB17D3AEB40094E0BB /* Model2_to_Model3.xcmappingmodel */; };
-		73BFFFDF17D3AEEE0094E0BB /* MHWUserToUserPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BFFFDE17D3AEEE0094E0BB /* MHWUserToUserPolicy.m */; };
 		73BFFFE217D3B4510094E0BB /* NSMigrationManager+Lookup.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BFFFE117D3B4510094E0BB /* NSMigrationManager+Lookup.m */; };
-		73BFFFE517D3B6730094E0BB /* MHWMigrationFromModel2Tests.m in Sources */ = {isa = PBXBuildFile; fileRef = 73BFFFE417D3B6730094E0BB /* MHWMigrationFromModel2Tests.m */; };
-		73BFFFE717D3BB0F0094E0BB /* Model1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73BFFFE617D3BB0F0094E0BB /* Model1.sqlite */; };
 		73C2046B17D1124B0051D6BD /* MHWMigrationManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C2046A17D1124B0051D6BD /* MHWMigrationManager.m */; };
-		73D71A2617D536F7000AEA97 /* Model1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73BFFFE617D3BB0F0094E0BB /* Model1.sqlite */; };
+		73C2EBF017DB972C00855DA5 /* NSManagedObjectModel+MHWAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 73C2EBEF17DB972C00855DA5 /* NSManagedObjectModel+MHWAdditions.m */; };
+		73C2EBF317DBACAD00855DA5 /* Model2_to_Model3_User.xcmappingmodel in Sources */ = {isa = PBXBuildFile; fileRef = 73C2EBF217DBACAD00855DA5 /* Model2_to_Model3_User.xcmappingmodel */; };
 		73DB63C417CE8BF0002CA975 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 739100FF17CBF1A600383BD0 /* CoreData.framework */; };
+		73E1761A17DBBB730046504B /* Model1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73E1761917DBBB730046504B /* Model1.sqlite */; };
+		73E1761C17DBBC660046504B /* Model1.sqlite in Resources */ = {isa = PBXBuildFile; fileRef = 73E1761917DBBB730046504B /* Model1.sqlite */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -89,15 +89,16 @@
 		73BFFFD817D3AAED0094E0BB /* Model1_to_Model2.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model1_to_Model2.xcmappingmodel; sourceTree = "<group>"; };
 		73BFFFDA17D3AB2A0094E0BB /* Model3.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = Model3.xcdatamodel; sourceTree = "<group>"; };
 		73BFFFDB17D3AEB40094E0BB /* Model2_to_Model3.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model2_to_Model3.xcmappingmodel; sourceTree = "<group>"; };
-		73BFFFDD17D3AEEE0094E0BB /* MHWUserToUserPolicy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWUserToUserPolicy.h; sourceTree = "<group>"; };
-		73BFFFDE17D3AEEE0094E0BB /* MHWUserToUserPolicy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWUserToUserPolicy.m; sourceTree = "<group>"; };
 		73BFFFE017D3B4510094E0BB /* NSMigrationManager+Lookup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMigrationManager+Lookup.h"; sourceTree = "<group>"; };
 		73BFFFE117D3B4510094E0BB /* NSMigrationManager+Lookup.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMigrationManager+Lookup.m"; sourceTree = "<group>"; };
 		73BFFFE317D3B6730094E0BB /* MHWMigrationFromModel2Tests.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWMigrationFromModel2Tests.h; sourceTree = "<group>"; };
 		73BFFFE417D3B6730094E0BB /* MHWMigrationFromModel2Tests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWMigrationFromModel2Tests.m; sourceTree = "<group>"; };
-		73BFFFE617D3BB0F0094E0BB /* Model1.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Model1.sqlite; sourceTree = "<group>"; };
 		73C2046917D1124B0051D6BD /* MHWMigrationManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MHWMigrationManager.h; sourceTree = "<group>"; };
 		73C2046A17D1124B0051D6BD /* MHWMigrationManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MHWMigrationManager.m; sourceTree = "<group>"; };
+		73C2EBEE17DB972C00855DA5 /* NSManagedObjectModel+MHWAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectModel+MHWAdditions.h"; sourceTree = "<group>"; };
+		73C2EBEF17DB972C00855DA5 /* NSManagedObjectModel+MHWAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectModel+MHWAdditions.m"; sourceTree = "<group>"; };
+		73C2EBF217DBACAD00855DA5 /* Model2_to_Model3_User.xcmappingmodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcmappingmodel; path = Model2_to_Model3_User.xcmappingmodel; sourceTree = "<group>"; };
+		73E1761917DBBB730046504B /* Model1.sqlite */ = {isa = PBXFileReference; lastKnownFileType = file; path = Model1.sqlite; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -176,7 +177,7 @@
 		739100BE17CBF03500383BD0 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				73BFFFE617D3BB0F0094E0BB /* Model1.sqlite */,
+				73E1761917DBBB730046504B /* Model1.sqlite */,
 				739100BF17CBF03500383BD0 /* BookMigration-Info.plist */,
 				739100C017CBF03500383BD0 /* InfoPlist.strings */,
 				739100C317CBF03500383BD0 /* main.m */,
@@ -187,6 +188,7 @@
 				739100FC17CBF13800383BD0 /* Model.xcdatamodeld */,
 				73BFFFD817D3AAED0094E0BB /* Model1_to_Model2.xcmappingmodel */,
 				73BFFFDB17D3AEB40094E0BB /* Model2_to_Model3.xcmappingmodel */,
+				73C2EBF217DBACAD00855DA5 /* Model2_to_Model3_User.xcmappingmodel */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -223,6 +225,8 @@
 				73C2046A17D1124B0051D6BD /* MHWMigrationManager.m */,
 				73BFFFE017D3B4510094E0BB /* NSMigrationManager+Lookup.h */,
 				73BFFFE117D3B4510094E0BB /* NSMigrationManager+Lookup.m */,
+				73C2EBEE17DB972C00855DA5 /* NSManagedObjectModel+MHWAdditions.h */,
+				73C2EBEF17DB972C00855DA5 /* NSManagedObjectModel+MHWAdditions.m */,
 				73BD5FE517CD369D003D1AB8 /* Custom Policies */,
 			);
 			name = CoreData;
@@ -242,8 +246,6 @@
 			children = (
 				73BD5FE617CD36BA003D1AB8 /* MHWBookToBookPolicy.h */,
 				73BD5FE717CD36BA003D1AB8 /* MHWBookToBookPolicy.m */,
-				73BFFFDD17D3AEEE0094E0BB /* MHWUserToUserPolicy.h */,
-				73BFFFDE17D3AEEE0094E0BB /* MHWUserToUserPolicy.m */,
 			);
 			name = "Custom Policies";
 			sourceTree = "<group>";
@@ -326,7 +328,7 @@
 				739100CE17CBF03500383BD0 /* Default-568h@2x.png in Resources */,
 				739100D417CBF03500383BD0 /* MHWViewController_iPhone.xib in Resources */,
 				739100D717CBF03500383BD0 /* MHWViewController_iPad.xib in Resources */,
-				73D71A2617D536F7000AEA97 /* Model1.sqlite in Resources */,
+				73E1761C17DBBC660046504B /* Model1.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -335,7 +337,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				739100E917CBF03500383BD0 /* InfoPlist.strings in Resources */,
-				73BFFFE717D3BB0F0094E0BB /* Model1.sqlite in Resources */,
+				73E1761A17DBBB730046504B /* Model1.sqlite in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,8 +374,9 @@
 				73C2046B17D1124B0051D6BD /* MHWMigrationManager.m in Sources */,
 				73BFFFD917D3AAED0094E0BB /* Model1_to_Model2.xcmappingmodel in Sources */,
 				73BFFFDC17D3AEB40094E0BB /* Model2_to_Model3.xcmappingmodel in Sources */,
-				73BFFFDF17D3AEEE0094E0BB /* MHWUserToUserPolicy.m in Sources */,
 				73BFFFE217D3B4510094E0BB /* NSMigrationManager+Lookup.m in Sources */,
+				73C2EBF017DB972C00855DA5 /* NSManagedObjectModel+MHWAdditions.m in Sources */,
+				73C2EBF317DBACAD00855DA5 /* Model2_to_Model3_User.xcmappingmodel in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -383,7 +386,6 @@
 			files = (
 				739100EC17CBF03500383BD0 /* MHWMigrationFromModel1Tests.m in Sources */,
 				738AC53017D26D01004DE3E5 /* MHWCoreDataTests.m in Sources */,
-				73BFFFE517D3B6730094E0BB /* MHWMigrationFromModel2Tests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,8 +8,9 @@
 
 #import <Foundation/Foundation.h>
 #import <CoreData/CoreData.h>
+#import "MHWMigrationManager.h"
 
-@interface MHWCoreDataController : NSObject
+@interface MHWCoreDataController : NSObject <MHWMigrationManagerDelegate>
 
 + (MHWCoreDataController *)sharedInstance;
 

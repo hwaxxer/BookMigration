@@ -9,8 +9,9 @@
 #import "MHWCoreDataController.h"
 #import "NSFileManager+MHWAdditions.h"
 #import "MHWMigrationManager.h"
+#import "NSManagedObjectModel+MHWAdditions.h"
 
-@interface MHWCoreDataController () <MHWMigrationManagerDelegate>
+@interface MHWCoreDataController ()
 
 @property (nonatomic, readwrite, strong) NSManagedObjectModel *managedObjectModel;
 @property (nonatomic, readwrite, strong) NSManagedObjectContext *managedObjectContext;
@@ -154,9 +155,38 @@
     return OK;
 }
 
+
+#pragma mark -
+#pragma mark - MHWMigrationManagerDelegate
+
 - (void)migrationManager:(MHWMigrationManager *)migrationManager migrationProgress:(float)migrationProgress
 {
     NSLog(@"migration progress: %f", migrationProgress);
+}
+
+- (NSArray *)migrationManager:(MHWMigrationManager *)migrationManager
+  mappingModelsForSourceModel:(NSManagedObjectModel *)sourceModel
+{
+    NSMutableArray *mappingModels = [@[] mutableCopy];
+    NSString *modelName = [sourceModel mhw_modelName];
+    if ([modelName isEqual:@"Model2"]) {
+        // Migrating to Model3
+        NSArray *urls = [[NSBundle bundleForClass:[self class]]
+                         URLsForResourcesWithExtension:@"cdm"
+                         subdirectory:nil];
+        for (NSURL *url in urls) {
+            if ([url.lastPathComponent rangeOfString:@"Model2_to_Model"].length != 0) {
+                NSMappingModel *mappingModel = [[NSMappingModel alloc] initWithContentsOfURL:url];
+                if ([url.lastPathComponent rangeOfString:@"User"].length != 0) {
+                    // User first so we create new relationship
+                    [mappingModels insertObject:mappingModel atIndex:0];
+                } else {
+                    [mappingModels addObject:mappingModel];
+                }
+            }
+        }
+    }
+    return mappingModels;
 }
 
 @end

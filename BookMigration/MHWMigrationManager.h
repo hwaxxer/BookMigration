@@ -14,6 +14,7 @@
 
 @optional
 - (void)migrationManager:(MHWMigrationManager *)migrationManager migrationProgress:(float)migrationProgress;
+- (NSArray *)migrationManager:(MHWMigrationManager *)migrationManager mappingModelsForSourceModel:(NSManagedObjectModel *)sourceModel;
 
 @end
 

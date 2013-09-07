@@ -34,6 +34,8 @@
         [[MHWCoreDataController sharedInstance] migrate:nil];
     }
 
+    return YES;
+
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
@@ -43,6 +45,7 @@
     }
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+
 
     return YES;
 }
@@ -57,7 +60,6 @@
 
     for (id mo in result) {
         [moc deleteObject:mo];
-        NSLog(@"files: %@", [mo valueForKey:@"files"]);
     }
 
     NSManagedObject *mo;
@@ -72,21 +74,25 @@
     mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
     [mo setValue:@"Franz Kafka" forKey:@"authorName"];
     [mo setValue:@"Metamorphosis" forKey:@"title"];
+    [mo setValue:[[mo valueForKey:@"title"] stringByAppendingPathExtension:@"file"] forKey:@"fileURL"];
     [mo setValue:user forKey:@"user"];
 
     mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
     [mo setValue:@"Franz Kafka" forKey:@"authorName"];
     [mo setValue:@"The Trial" forKey:@"title"];
+    [mo setValue:[[mo valueForKey:@"title"] stringByAppendingPathExtension:@"file"] forKey:@"fileURL"];
     [mo setValue:user forKey:@"user"];
 
     mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
     [mo setValue:@"Witold Gombrowicz" forKey:@"authorName"];
     [mo setValue:@"Cosmos" forKey:@"title"];
+    [mo setValue:[[mo valueForKey:@"title"] stringByAppendingPathExtension:@"file"] forKey:@"fileURL"];
     [mo setValue:user forKey:@"user"];
 
     mo = [[NSManagedObject alloc] initWithEntity:entityDescription insertIntoManagedObjectContext:moc];
     [mo setValue:@"Thomas Bernhard" forKey:@"authorName"];
     [mo setValue:@"Extinction" forKey:@"title"];
+    [mo setValue:[[mo valueForKey:@"title"] stringByAppendingPathExtension:@"file"] forKey:@"fileURL"];
     [mo setValue:user forKey:@"user"];
 
     [moc save:nil];

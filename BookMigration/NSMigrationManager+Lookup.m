@@ -15,7 +15,7 @@
     NSMutableDictionary *userInfo = (NSMutableDictionary *)self.userInfo;
     // Check if we've already created a userInfo dictionary
     if (!userInfo) {
-        userInfo = [NSMutableDictionary dictionary];
+        userInfo = [@{} mutableCopy];
         self.userInfo = userInfo;
     }
 

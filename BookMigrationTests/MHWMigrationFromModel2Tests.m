@@ -38,4 +38,14 @@
     }
 }
 
+- (void)testThatBooksHaveAuthors
+{
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Book"];
+    NSArray *books = [moc executeFetchRequest:request error:nil];
+    for (NSManagedObject *book in books) {
+        STAssertNotNil([book valueForKey:@"authors"], @"No author on file");
+    }
+}
+
 @end

@@ -42,24 +42,33 @@
                              error:error]) {
         return NO;
     }
+
+    NSArray *mappingModels = @[mappingModel];
+    if ([self.delegate respondsToSelector:@selector(migrationManager:mappingModelsForSourceModel:)]) {
+        NSArray *explicitMappingModels = [self.delegate migrationManager:self mappingModelsForSourceModel:sourceModel];
+        if (0 < explicitMappingModels.count) {
+            mappingModels = explicitMappingModels;
+        }
+    }
     NSURL *destinationStoreURL = [self destinationStoreURLWithSourceStoreURL:sourceStoreURL
                                                                    modelName:modelName];
-
     NSMigrationManager *manager = [[NSMigrationManager alloc] initWithSourceModel:sourceModel
                                                                  destinationModel:destinationModel];
     [manager addObserver:self
               forKeyPath:@"migrationProgress"
                  options:NSKeyValueObservingOptionNew
                  context:nil];
-
-    BOOL didMigrate = [manager migrateStoreFromURL:sourceStoreURL
-                                              type:type
-                                           options:nil
-                                  withMappingModel:mappingModel
-                                  toDestinationURL:destinationStoreURL
-                                   destinationType:type
-                                destinationOptions:nil
-                                             error:error];
+    BOOL didMigrate = NO;
+    for (NSMappingModel *mappingModel in mappingModels) {
+        didMigrate = [manager migrateStoreFromURL:sourceStoreURL
+                                             type:type
+                                          options:nil
+                                 withMappingModel:mappingModel
+                                 toDestinationURL:destinationStoreURL
+                                  destinationType:type
+                               destinationOptions:nil
+                                            error:error];
+    }
     [manager removeObserver:self
                  forKeyPath:@"migrationProgress"];
     if (!didMigrate) {
@@ -87,7 +96,7 @@
     for (NSString *momdPath in momdArray) {
         NSString *resourceSubpath = [momdPath lastPathComponent];
         NSArray *array = [[NSBundle mainBundle] pathsForResourcesOfType:@"mom"
-                          inDirectory:resourceSubpath];
+                                                            inDirectory:resourceSubpath];
         [modelPaths addObjectsFromArray:array];
     }
     NSArray *otherModels = [[NSBundle mainBundle] pathsForResourcesOfType:@"mom"

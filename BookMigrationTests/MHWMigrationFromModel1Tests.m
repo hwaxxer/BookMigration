@@ -21,8 +21,15 @@
 - (void)setUp
 {
     [super setUp];
-
     [self setUpCoreDataStackMigratingFromStoreWithName:@"Model1.sqlite"];
+}
+
+- (void)testThatUsersExist
+{
+    NSManagedObjectContext *moc = self.managedObjectContext;
+    NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"User"];
+    NSArray *users = [moc executeFetchRequest:request error:nil];
+    STAssertTrue(0 < users.count, @"Users have disappeared after migration");
 }
 
 - (void)testThatAuthorsExists

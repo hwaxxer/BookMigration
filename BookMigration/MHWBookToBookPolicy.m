@@ -35,10 +35,8 @@
         }
 
         if (modelVersion.integerValue == 2) {
-
             // Check if we've already created the authors lookup
             NSMutableDictionary *authorLookup = [manager lookupWithKey:@"authors"];
-
             // Check if we've already created this author
             NSString *authorName = [sourceInstance valueForKey:@"authorName"];
             NSManagedObject *author = [authorLookup valueForKey:authorName];
@@ -52,19 +50,22 @@
                 // Populate lookup for reuse
                 [authorLookup setValue:author forKey:authorName];
             }
-
             [destinationInstance performSelector:@selector(addAuthorsObject:) withObject:author];
         } else if (modelVersion.integerValue == 3) {
+            NSArray *sourceUsers = [sourceInstance valueForKey:@"users"];
+            for (NSManagedObject *sourceUser in sourceUsers) {
 
-            NSMutableDictionary *fileLookup = [manager lookupWithKey:@"files"];
-
-            NSManagedObject *file = [NSEntityDescription insertNewObjectForEntityForName:@"File"
-                                                                  inManagedObjectContext:manager.destinationContext];
-            [file setValue:[sourceInstance valueForKey:@"fileURL"] forKey:@"fileURL"];
-            [file setValue:destinationInstance forKey:@"book"];
-            
-            NSString *objectID = sourceInstance.objectID.URIRepresentation.description;
-            [fileLookup setValue:file forKey:objectID];
+                NSManagedObject *file = [NSEntityDescription insertNewObjectForEntityForName:@"File"
+                                                                      inManagedObjectContext:manager.destinationContext];
+                [file setValue:[sourceInstance valueForKey:@"fileURL"] forKey:@"fileURL"];
+                [file setValue:destinationInstance forKey:@"book"];
+                
+                NSInteger userId = [[sourceUser valueForKey:@"userId"] integerValue];
+                NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"User"];
+                request.predicate = [NSPredicate predicateWithFormat:@"userId = %d", userId];
+                NSManagedObject *destinationUser = [[manager.destinationContext executeFetchRequest:request error:nil] lastObject];
+                [file setValue:destinationUser forKey:@"user"];
+            }
         }
         [manager associateSourceInstance:sourceInstance
                  withDestinationInstance:destinationInstance
