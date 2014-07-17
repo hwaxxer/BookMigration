@@ -70,6 +70,19 @@
 
     NSError *error = nil;
 
+  NSDictionary *options = nil;
+  if ([self isMigrationNeeded]) {
+    options = @{
+                NSInferMappingModelAutomaticallyOption: @YES,
+                NSSQLitePragmasOption: @{@"journal_mode": @"DELETE"}
+                };
+  } else {
+    options = @{
+                NSInferMappingModelAutomaticallyOption: @YES,
+                NSSQLitePragmasOption: @{@"journal_mode": @"WAL"}
+                };
+  }
+
     NSManagedObjectModel *mom = [self managedObjectModel];
 
     _persistentStoreCoordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:mom];
@@ -77,7 +90,7 @@
     if (![_persistentStoreCoordinator addPersistentStoreWithType:[self sourceStoreType]
                                                    configuration:nil
                                                              URL:[self sourceStoreURL]
-                                                         options:nil
+                                                         options:options
                                                            error:&error]) {
 
         NSLog(@"error: %@", error);
