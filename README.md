@@ -1,7 +1,7 @@
 BookMigration
 =============
 
-Simple app that demonstrates Core Data migration. 
+Simple app that demonstrates Core Data migration as code example accompanying the objc.io article [Custom Core Data Migrations](http://www.objc.io/issue-4/core-data-migration.html).
 
 
 ##Credits
